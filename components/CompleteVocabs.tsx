@@ -1,69 +1,72 @@
 import { vocabularies } from "@zazuko/rdf-vocabularies";
-import { rdf, rdfs } from "@tpluscode/rdf-ns-builders";
+import { rdf, rdfs, skos } from "@tpluscode/rdf-ns-builders";
 import ext from "rdf-ext";
 // import {rdf} from "@zazuko/rdf-vocabularies/datasets"
 import clownface from "clownface";
 import React from "react";
 import { useAsync } from "react-async-hook";
-import { Stream, Quad } from "rdf-js";
-import { JsonLdSerializer } from "jsonld-streaming-serializer";
-import { streamToString } from "../services/utils";
-import SerializerJsonld from "@rdfjs/serializer-jsonld";
-import { Transform } from "stream";
-// const dataFactory = require("@rdfjs/data-model");
-// const mySerializer = new JsonLdSerializer({ space: "  " });
+import { DatasetCore } from "rdf-js";
 
-class ToJSONStrings extends Transform {
-  _transform(chunk: any, enc: string, cb: () => void) {
-      var upperChunk = JSON.stringify(chunk)
-      console.log("t", upperChunk);
-      
-    this.push(upperChunk);
-    cb();
-  }
+import FlexSearch, { Index } from "flexsearch";
+
+interface RDFDocument {
+  label?: string;
+  comment?: string;
+  prefLabel?: string;
+  notation?: string;
+  id?: number;
 }
 
-const mySerializer = new SerializerJsonld();
-
-async function toDoc(ds: Stream<Quad>) {
-  console.log(ds);
-
-  mySerializer.import(ds);
-  console.log(mySerializer);
-
-  const tj = new ToJSONStrings()
-  console.log("NOPE");
-  mySerializer.pipe(tj)
-  console.log("tj", tj);
-  
-  
-
-  const out = await streamToString(tj);
-  console.log(out);
-  return out;
+function toDoc(dataset: DatasetCore): RDFDocument {
+  const cf = clownface({ dataset });
+  return {
+    label: cf.out(rdfs.label).value,
+    comment: cf.out(rdfs.comment).value,
+    prefLabel: cf.out(skos.prefLabel).value,
+    notation: cf.out(skos.notation).value,
+  };
 }
+
+const idx: Index<RDFDocument> = FlexSearch.create({
+  doc: {
+    id: "id",
+    field: ["label", "comment", "prefLabel", "notation"],
+  },
+});
+
+// async function search(s: string): Promise {
+//     return new Promise((resolve, reject) => idx.search(s, undefined, ))
+// }
 
 async function getVocabs() {
-  const out = await vocabularies({ only: ["rdfs", "rdf"] });
+  const out = await vocabularies({ only: ["schema"] });
   // const v = out[1]
   console.log(out);
 
-  const cf = clownface({ dataset: out.rdfs });
+  const cf = clownface({ dataset: out.schema });
   // const cf = ""
   console.log(cf);
 
   const hs = cf.has(rdf.type, rdf.Property);
 
-  console.log(
-    await Promise.all(
-      hs.values.map((v) => {
-        let s = out.rdfs.match(ext.namedNode(v)).toStream();
-        // console.log(streamToString(s));
+  const docs = hs.values.map((v) => {
+    let s = out.schema.match(ext.namedNode(v));
+    // console.log(streamToString(s));
 
-        return toDoc(s);
-      })
-    )
-  );
+    return toDoc(s);
+  });
+  console.log(docs);
+
+  let n = 0;
+  for (const doc of docs) {
+    doc.id = n;
+    idx.add(doc);
+    n++;
+  }
+
+//   console.log(idx.export());
+
+  console.log(await idx.search("name"));
 
   console.log(hs.out(rdfs.label).values);
 }
