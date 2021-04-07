@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import CompleteVocabs from '../components/CompleteVocabs'
 import Layout from '../components/Layout'
 
 const IndexPage = () => (
@@ -9,6 +10,7 @@ const IndexPage = () => (
         <a>About</a>
       </Link>
     </p>
+    <CompleteVocabs></CompleteVocabs>
   </Layout>
 )
 
