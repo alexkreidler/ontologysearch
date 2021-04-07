@@ -1,0 +1,20 @@
+Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.
+CompleteVocabs@webpack-internal:///./components/CompleteVocabs.tsx:63:74
+Layout@webpack-internal:///./components/Layout.tsx:19:18
+IndexPage
+App@webpack-internal:///./node_modules/next/dist/pages/_app.js:77:20
+ErrorBoundary@webpack-internal:///./node_modules/@next/react-dev-overlay/lib/internal/ErrorBoundary.js:23:47
+ReactDevOverlay@webpack-internal:///./node_modules/@next/react-dev-overlay/lib/internal/ReactDevOverlay.js:73:20
+Container@webpack-internal:///./node_modules/next/dist/client/index.js:157:20
+AppContainer@webpack-internal:///./node_modules/next/dist/client/index.js:646:18
+Root@webpack-internal:///./node_modules/next/dist/client/index.js:779:18 17 react-dom.development.js:67:30
+Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.
+CompleteVocabs@webpack-internal:///./components/CompleteVocabs.tsx:63:74
+Layout@webpack-internal:///./components/Layout.tsx:19:18
+IndexPage
+App@webpack-internal:///./node_modules/next/dist/pages/_app.js:77:20
+ErrorBoundary@webpack-internal:///./node_modules/@next/react-dev-overlay/lib/internal/ErrorBoundary.js:23:47
+ReactDevOverlay@webpack-internal:///./node_modules/@next/react-dev-overlay/lib/internal/ReactDevOverlay.js:73:20
+Container@webpack-internal:///./node_modules/next/dist/client/index.js:157:20
+AppContainer@webpack-internal:///./node_modules/next/dist/client/index.js:646:18
+Root@webpack-internal:///./node_modules/next/dist/client/index.js:779:18 71 react_devtools_backend.js:2430:23
