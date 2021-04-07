@@ -56,7 +56,7 @@ export async function createVocabIndex(
       const docs = [
         cf.has(rdf.type, rdf.Property).values,
 
-        cf.has(rdf.type, rdf.Class).values,
+        cf.has(rdf.type, rdfs.Class).values,
       ]
         .flat()
         .map((v) => {
