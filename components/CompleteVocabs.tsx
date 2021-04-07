@@ -1,11 +1,11 @@
 import { Input } from "@chakra-ui/input";
-import { Box, Code } from "@chakra-ui/layout";
+import { Box, Text } from "@chakra-ui/layout";
 import { Index } from "flexsearch";
-import React, { useEffect, useState } from "react";
-import { useAsync } from "react-async-hook";
-import { createVocabIndex, RDFDocument } from "../services/searchVocab";
+import React, { useState } from "react";
+import { RDFDocument } from "../services/searchVocab";
 
-import mock from "../services/example_search.json"
+import mock from "../services/example_search.json";
+import { Heading, Stack } from "@chakra-ui/react";
 
 async function doSearch(
   index?: Index<RDFDocument>,
@@ -19,10 +19,22 @@ async function doSearch(
   return await index.search(query);
 }
 
+function WithPrefix({ s }: { s: string }) {
+  let a = s.split(":");
+  return (
+    <>
+      <Text as="span" color="gray.400">
+        {a[0]}:
+      </Text>
+      {a[1]}
+    </>
+  );
+}
+
 export default function CompleteVocabs() {
   const [index, setIndex] = useState<Index<RDFDocument> | undefined>(undefined);
   const [search, setSearch] = useState<string>("");
-  const [result, setResult] = useState<any | undefined>(mock);
+  const [result, setResult] = useState<RDFDocument[]>(mock);
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -46,9 +58,17 @@ export default function CompleteVocabs() {
     <Box>
       <Input onChange={onChangeHandler} value={search}></Input>
       <Box>
-        <Code style={{ whiteSpace: "pre" }}>
-          {JSON.stringify(result, undefined, 4)}
-        </Code>
+        {result.map((v) => (
+          <Stack spacing={1} p={6} my={2} borderRadius={4} shadow="md">
+            {v.withPrefix && (
+              <Heading size="md">
+                <WithPrefix s={v.withPrefix}></WithPrefix>
+              </Heading>
+            )}
+
+            <Text>{v.comment}</Text>
+          </Stack>
+        ))}
       </Box>
     </Box>
   );
