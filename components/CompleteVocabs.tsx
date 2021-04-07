@@ -1,5 +1,5 @@
 import { Index } from "flexsearch";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAsync } from "react-async-hook";
 import { createVocabIndex, RDFDocument } from "../services/searchVocab";
 
@@ -7,6 +7,8 @@ async function doSearch(
   index?: Index<RDFDocument>,
   query?: string
 ): Promise<RDFDocument[]> {
+  console.log("Doing search", index, query);
+
   if (!query || !index) {
     return [];
   }
@@ -14,28 +16,51 @@ async function doSearch(
 }
 
 export default function CompleteVocabs() {
-  const status = useAsync(createVocabIndex, [["rdfs"]]);
-  const [search, setSearch] = useState<string | undefined>(undefined);
-  const [index, setIndex] = useState<Index<RDFDocument> | undefined>(undefined)
+  const [index, setIndex] = useState<Index<RDFDocument> | undefined>(undefined);
+  const [search, setSearch] = useState<string>("");
+  const [result, setResult] = useState<any | undefined>(undefined);
 
-  if (status.result) {
-      setIndex(status.result)
-  }
+  const onChangeHandler = (event) => {
+    // console.log(event.target.value);
 
-  const result = useAsync(doSearch, [index, search]);
+    setSearch(event.target.value);
+  };
+
+  useEffect(() => {
+    const makeIndex = async () => {
+      const idx = await createVocabIndex(["rdfs"]);
+      setIndex(idx);
+    };
+    makeIndex();
+  }, []);
+
+  useEffect(() => {
+    if (index) {
+      console.log("good");
+      doSearch(index, search).then((v) => setResult(v));
+    }
+  }, [search]);
+
+  //   const status = useAsync(createVocabIndex, [["rdfs"]]);
+  //   const [search, setSearch] = useState<string | undefined>(undefined);
+  //   const [index, setIndex] = useState<Index<RDFDocument> | undefined>(undefined)
+
+  //   if (status.result?.add) {
+  //       setIndex(status.result)
+  //   }
+
+  //   const result = useAsync(doSearch, [index, search]);
 
   return (
     <div>
-      {status.loading && <div>Loading</div>}
-      {status.error && <div>Error: {status.error.message}</div>}
-      {status.result && (
+      <div>
+        <input onChange={onChangeHandler} value={search}></input>
         <div>
-          <input onChange={(e) => setSearch(e.target.value)}></input>
-          <pre>
-              {JSON.stringify(result)}
-          </pre>
+          <code style={{ whiteSpace: "pre" }}>
+            {JSON.stringify(result, undefined, 4)}
+          </code>
         </div>
-      )}
+      </div>
     </div>
   );
 }

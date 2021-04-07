@@ -37,7 +37,11 @@ const idx: Index<RDFDocument> = FlexSearch.create({
   },
 });
 
-export async function createVocabIndex(vocabs: string[]): Promise<Index<RDFDocument>> {
+export async function createVocabIndex(
+  vocabs: string[]
+): Promise<Index<RDFDocument>> {
+  console.log("Creating indexes for vocabs", vocabs);
+
   const out = await vocabularies({ only: vocabs });
 
   for (const key in out) {
