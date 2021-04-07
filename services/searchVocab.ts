@@ -2,7 +2,7 @@ import { vocabularies } from "@zazuko/rdf-vocabularies";
 import { rdf, rdfs, skos } from "@tpluscode/rdf-ns-builders";
 import rdfExt from "rdf-ext";
 import clownface from "clownface";
-import { DatasetCore } from "rdf-js";
+import { DatasetCore, NamedNode } from "rdf-js";
 
 import FlexSearch, { Index } from "flexsearch";
 
@@ -19,14 +19,14 @@ export interface RDFDocument {
   iri?: string;
 }
 
-function toDoc(dataset: DatasetCore): RDFDocument {
-  const cf = clownface({ dataset });
+function toDoc(dataset: DatasetCore, term: NamedNode): RDFDocument {
+  const cf = clownface({ dataset, term });
   return {
     label: cf.out(rdfs.label).value,
     comment: cf.out(rdfs.comment).value,
     prefLabel: cf.out(skos.prefLabel).value,
     notation: cf.out(skos.notation).value,
-    iri: cf.value,
+    iri: term.value,
   };
 }
 
@@ -44,6 +44,7 @@ export async function createVocabIndex(
 
   const out = await vocabularies({ only: vocabs });
 
+  let n = 0;
   for (const key in out) {
     if (Object.prototype.hasOwnProperty.call(out, key)) {
       const element = out[key];
@@ -56,9 +57,11 @@ export async function createVocabIndex(
         cf.has(rdf.type, rdf.Class).values,
       ]
         .flat()
-        .map((v) => toDoc(element.match(rdfExt.namedNode(v))));
+        .map((v) => {
+          let node = rdfExt.namedNode(v);
+          return toDoc(element.match(node), node);
+        });
 
-      let n = 0;
       for (const doc of docs) {
         doc.id = n;
         idx.add(doc);

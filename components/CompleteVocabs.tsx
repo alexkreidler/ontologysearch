@@ -7,7 +7,7 @@ async function doSearch(
   index?: Index<RDFDocument>,
   query?: string
 ): Promise<RDFDocument[]> {
-  console.log("Doing search", index, query);
+//   console.log("Doing search", index, query);
 
   if (!query || !index) {
     return [];
@@ -20,15 +20,13 @@ export default function CompleteVocabs() {
   const [search, setSearch] = useState<string>("");
   const [result, setResult] = useState<any | undefined>(undefined);
 
-  const onChangeHandler = (event) => {
-    // console.log(event.target.value);
-
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
 
   useEffect(() => {
     const makeIndex = async () => {
-      const idx = await createVocabIndex(["rdfs"]);
+      const idx = await createVocabIndex(["rdf","rdfs","schema"]);
       setIndex(idx);
     };
     makeIndex();
@@ -36,20 +34,10 @@ export default function CompleteVocabs() {
 
   useEffect(() => {
     if (index) {
-      console.log("good");
       doSearch(index, search).then((v) => setResult(v));
     }
   }, [search]);
 
-  //   const status = useAsync(createVocabIndex, [["rdfs"]]);
-  //   const [search, setSearch] = useState<string | undefined>(undefined);
-  //   const [index, setIndex] = useState<Index<RDFDocument> | undefined>(undefined)
-
-  //   if (status.result?.add) {
-  //       setIndex(status.result)
-  //   }
-
-  //   const result = useAsync(doSearch, [index, search]);
 
   return (
     <div>
