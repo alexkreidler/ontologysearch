@@ -10,7 +10,7 @@ const IndexPage = () => (
     <Stack spacing={4}>
       <Heading size="xl">Ontology Search</Heading>
       <Text>
-        Use the input below to instantly search your selected ontologies.
+        Use the inputs below to instantly search the selected ontologies. 
       </Text>
       <CompleteVocabs></CompleteVocabs>
     </Stack>
