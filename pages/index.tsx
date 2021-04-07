@@ -1,17 +1,20 @@
-import Link from 'next/link'
-import CompleteVocabs from '../components/CompleteVocabs'
-import Layout from '../components/Layout'
+import { Heading, Text } from "@chakra-ui/layout";
+import { Stack } from "@chakra-ui/react";
+import Link from "next/link";
+import React from "react";
+import CompleteVocabs from "../components/CompleteVocabs";
+import Layout from "../components/Layout";
 
 const IndexPage = () => (
   <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
-    </p>
-    <CompleteVocabs></CompleteVocabs>
+    <Stack spacing={4}>
+      <Heading size="xl">Ontology Search</Heading>
+      <Text>
+        Use the input below to instantly search your selected ontologies.
+      </Text>
+      <CompleteVocabs></CompleteVocabs>
+    </Stack>
   </Layout>
-)
+);
 
-export default IndexPage
+export default IndexPage;

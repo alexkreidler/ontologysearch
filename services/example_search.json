@@ -1,0 +1,44 @@
+[
+    {
+        "label": "colleague",
+        "comment": "A colleague of the person.",
+        "iri": "http://schema.org/colleague",
+        "withPrefix": "schema:colleague",
+        "id": 285
+    },
+    {
+        "label": "colleagues",
+        "comment": "A colleague of the person.",
+        "iri": "http://schema.org/colleagues",
+        "withPrefix": "schema:colleagues",
+        "id": 286
+    },
+    {
+        "label": "collection",
+        "comment": "A sub property of object. The collection target of the action.",
+        "iri": "http://schema.org/collection",
+        "withPrefix": "schema:collection",
+        "id": 287
+    },
+    {
+        "label": "collectionSize",
+        "comment": "The number of items in the [[Collection]].",
+        "iri": "http://schema.org/collectionSize",
+        "withPrefix": "schema:collectionSize",
+        "id": 289
+    },
+    {
+        "label": "color",
+        "comment": "The color of the product.",
+        "iri": "http://schema.org/color",
+        "withPrefix": "schema:color",
+        "id": 290
+    },
+    {
+        "label": "colorist",
+        "comment": "The individual who adds color to inked drawings.",
+        "iri": "http://schema.org/colorist",
+        "withPrefix": "schema:colorist",
+        "id": 291
+    }
+]

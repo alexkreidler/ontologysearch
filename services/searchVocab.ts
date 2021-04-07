@@ -1,4 +1,4 @@
-import { vocabularies } from "@zazuko/rdf-vocabularies";
+import { vocabularies, shrink } from "@zazuko/rdf-vocabularies";
 import { rdf, rdfs, skos } from "@tpluscode/rdf-ns-builders";
 import rdfExt from "rdf-ext";
 import clownface from "clownface";
@@ -17,6 +17,7 @@ export interface RDFDocument {
   notation?: string;
   id?: number;
   iri?: string;
+  withPrefix?: string;
 }
 
 function toDoc(dataset: DatasetCore, term: NamedNode): RDFDocument {
@@ -27,6 +28,7 @@ function toDoc(dataset: DatasetCore, term: NamedNode): RDFDocument {
     prefLabel: cf.out(skos.prefLabel).value,
     notation: cf.out(skos.notation).value,
     iri: term.value,
+    withPrefix: shrink(term.value)
   };
 }
 
