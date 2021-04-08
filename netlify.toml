@@ -1,0 +1,7 @@
+[build]
+  command = "yarn run build && yarn run next export"
+  ignore = "git log -1 --pretty=%B | grep dependabot"
+  publish = "out"
+
+# [[plugins]]
+#   package = "@netlify/plugin-nextjs"

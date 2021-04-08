@@ -1,5 +1,5 @@
 {
-  "name": "with-typescript",
+  "name": "ontologysearch",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
@@ -45,5 +45,5 @@
     "prettier": "^2.2.1",
     "typescript": "4.0"
   },
-  "license": "MIT"
+  "license": "Apache-2.0"
 }
