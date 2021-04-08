@@ -5,7 +5,7 @@ import SearchOntologies from "../components/SearchOntologies"
 import Layout from "../components/Layout"
 
 const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
+  <Layout>
     <Stack spacing={4}>
       <Heading size="xl">Ontology Search</Heading>
       <Text>

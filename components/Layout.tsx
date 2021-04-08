@@ -7,10 +7,7 @@ type Props = {
   title?: string
 }
 
-const Layout = ({
-  children,
-  title = "This is the default title",
-}: Props) => (
+const Layout = ({ children, title = "Ontology Search" }: Props) => (
   <Flex direction="column" minH="100vh">
     <Head>
       <title>{title}</title>
@@ -24,7 +21,10 @@ const Layout = ({
     <Spacer></Spacer>
     <Box backgroundColor="gray.200" p={6}>
       &copy; {new Date().getFullYear()} Alex Kreidler.{" "}
-      <Link href="https://github.com/alexkreidler/ontologysearch">
+      <Link
+        color="blue.300"
+        href="https://github.com/alexkreidler/ontologysearch"
+      >
         Source code available on Github
       </Link>{" "}
       under the Apache 2.0 License.
