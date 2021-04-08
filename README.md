@@ -2,6 +2,8 @@
 
 ![Screenshot of OntologySearch user interface](./assets/basic.png)
 
+[View the online demo app](https://ontologysearch.netlify.app/)
+
 A completely browser-based search tool for the most common ontologies.
 
 The tool performs full text search on the labels and common descriptions, including:

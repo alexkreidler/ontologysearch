@@ -1,7 +1,7 @@
 import { Heading, Text } from "@chakra-ui/layout"
 import { Stack } from "@chakra-ui/react"
 import React from "react"
-import CompleteVocabs from "../components/CompleteVocabs"
+import SearchOntologies from "../components/SearchOntologies"
 import Layout from "../components/Layout"
 
 const IndexPage = () => (
@@ -12,7 +12,7 @@ const IndexPage = () => (
         Use the inputs below to instantly search the selected
         ontologies.
       </Text>
-      <CompleteVocabs></CompleteVocabs>
+      <SearchOntologies></SearchOntologies>
     </Stack>
   </Layout>
 )

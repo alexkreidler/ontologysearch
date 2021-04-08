@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react"
 import Head from "next/head"
-import { Box, Flex, Spacer } from "@chakra-ui/react"
+import { Box, Flex, Link, Spacer } from "@chakra-ui/react"
 
 type Props = {
   children?: ReactNode
@@ -23,8 +23,11 @@ const Layout = ({
     <Box p={6}>{children}</Box>
     <Spacer></Spacer>
     <Box backgroundColor="gray.200" p={6}>
-      &copy; {new Date().getFullYear()} Alex Kreidler. Source code
-      available on Github under the Apache 2.0 License.
+      &copy; {new Date().getFullYear()} Alex Kreidler.{" "}
+      <Link href="https://github.com/alexkreidler/ontologysearch">
+        Source code available on Github
+      </Link>{" "}
+      under the Apache 2.0 License.
     </Box>
   </Flex>
 )

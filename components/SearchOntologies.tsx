@@ -71,7 +71,7 @@ function VocabItem({ v }: { v: RDFDocument }) {
   )
 }
 
-export default function CompleteVocabs() {
+export default function SearchOntologies() {
   const [index, setIndex] = useState<Index<RDFDocument> | undefined>(
     undefined
   )
